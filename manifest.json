@@ -1,7 +1,7 @@
 {
   "manifest_version": "1",
   "api_version": "1",
-  "name": "Chrome bookmarks",
+  "name": "Google Chrome Bookmarks",
   "description": "Search and launch your Google Chrome bookmarks",
   "developer_name": "Dmitry Antonenko",
   "icon": "images/chrome.png",
