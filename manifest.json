@@ -1,0 +1,20 @@
+{
+  "manifest_version": "1",
+  "api_version": "1",
+  "name": "Chrome bookmarks",
+  "description": "Find in chrome bookmarks",
+  "developer_name": "Dmitry",
+  "icon": "images/chrome.png",
+  "options": {
+    "query_debounce": 0.1
+  },
+  "preferences": [
+    {
+      "id": "chrome_bookmarks",
+      "type": "keyword",
+      "name": "Chrome bookmarks",
+      "description": "Find in chrome bookmarks",
+      "default_value": "cb"
+    }
+  ]
+}
