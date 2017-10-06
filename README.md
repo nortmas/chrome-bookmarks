@@ -1,6 +1,6 @@
-Chrome bookmarks extension for the [Ulauncher](https://ulauncher.io/).
+Google Chrome Bookmarks extension for the [Ulauncher](https://ulauncher.io/).
 
-Find your Chrome bookmarks through the Ulauncher.
+Find and launch your Google Chrome bookmarks through the Ulauncher.
 
 [Other extensions](https://ext.ulauncher.io/)
 
