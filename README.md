@@ -1,5 +1,7 @@
-[Chrome bookmarks](https://github.com/linuxmint/Cinnamon) extension for the [ulauncher](https://ulauncher.io/).
+Chrome bookmarks extension for the [Ulauncher](https://ulauncher.io/).
 
-Fine your Chrome bookmarks.
+Find your Chrome bookmarks through the Ulauncher.
 
-![extension screenshot](https://i.imgur.com/YVmyePX.png)
+[Other extensions](https://ext.ulauncher.io/)
+
+![extension screenshot](https://i.imgur.com/zIE1kGK.png)
