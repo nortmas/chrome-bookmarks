@@ -12,6 +12,12 @@ from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
+support_browsers = ['google-chrome', 'chromium']
+browser_imgs = {
+    'google-chrome': 'images/chrome.png',
+    'chromium': 'images/chromium.png',
+}
+
 
 class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
@@ -21,34 +27,38 @@ class KeywordQueryEventListener(EventListener):
 
 class ChromeBookmarks(Extension):
     matches_len = 0
+    max_matches_len = 10
 
     def __init__(self):
-        self.bookmarks_path = self.find_bookmarks_path()
+        self.bookmarks_paths = self.find_bookmarks_paths()
         super(ChromeBookmarks, self).__init__()
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
     @staticmethod
-    def find_bookmarks_path():
-        f = os.popen('locate google-chrome | grep Bookmarks')
-        res = f.read()
-        res = res.split('\n')
-        if len(res) == 0:
-            logger.exception('Path to the Chrome Bookmarks was not found')
-        if len(res) > 1:
-            for i in range(0, len(res)):
-                if res[i][-9:] == 'Bookmarks':
-                    return res[i]
+    def find_bookmarks_paths():
+        res_lst = []
+        for browser in support_browsers:
+            f = os.popen('locate %s | grep Bookmarks' % browser)
+            res = f.read().split('\n')
+            if len(res) == 0:
+                logger.info('Path to the %s Bookmarks was not found' % browser)
+                continue
+            for one_path in res:
+                if one_path.endswith('Bookmarks'):
+                    res_lst.append((one_path, browser))
 
-        logger.exception('Path to the Chrome Bookmarks was not found')
+        if len(res_lst) == 0:
+            logger.exception('Path to the Chrome Bookmarks was not found')
+        return res_lst
 
     def find_rec(self, data, query, matches):
 
-        if self.matches_len >= 10:
+        if self.matches_len >= self.max_matches_len:
             return
 
         if data['type'] == 'folder':
-            for i in range(0, len(data['children'])):
-                self.find_rec(data['children'][i], query, matches)
+            for child in data['children']:
+                self.find_rec(child, query, matches)
         else:
             res = data['name'].lower().find(query, 0, len(data['name']))
             if res != -1:
@@ -60,26 +70,27 @@ class ChromeBookmarks(Extension):
     def get_items(self, query):
 
         items = []
-        matches = []
         self.matches_len = 0
 
         if query is None:
             query = ''
 
-        with open(self.bookmarks_path) as data_file:
+        for bookmarks_path, browser in self.bookmarks_paths:
+            matches = []
+            with open(bookmarks_path) as data_file:
+                data = json.load(data_file)
+                bookmark_bar = data['roots']['bookmark_bar']
+                matches = self.find_rec(bookmark_bar, query, matches)
 
-            data = json.load(data_file)
-            matches = self.find_rec(data['roots']['bookmark_bar'], query, matches)
-            max_len = self.matches_len
-
-            if self.matches_len < 10:
-                max_len = self.matches_len
-            for i in range(0, max_len):
-                bookmark_name = matches[i]['name'].encode('utf-8')
-                bookmark_url = matches[i]['url'].encode('utf-8')
-                items.append(ExtensionResultItem(icon='images/chrome.png',
-                                                 name='%s' % bookmark_name,
-                                                 description='%s' % bookmark_url,
-                                                 on_enter=OpenUrlAction(bookmark_url)))
+            for bookmark in matches:
+                bookmark_name = bookmark['name'].encode('utf-8')
+                bookmark_url = bookmark['url'].encode('utf-8')
+                item = ExtensionResultItem(
+                    icon=browser_imgs.get(browser),
+                    name='%s' % bookmark_name,
+                    description='%s' % bookmark_url,
+                    on_enter=OpenUrlAction(bookmark_url)
+                )
+                items.append(item)
 
         return items
