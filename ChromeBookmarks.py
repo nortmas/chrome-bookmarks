@@ -12,10 +12,11 @@ from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
-support_browsers = ['google-chrome', 'chromium']
+support_browsers = ['google-chrome', 'chromium', 'Brave-Browser']
 browser_imgs = {
     'google-chrome': 'images/chrome.png',
     'chromium': 'images/chromium.png',
+    'Brave-Browser': 'images/brave.png',
 }
 
 
