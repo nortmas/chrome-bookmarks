@@ -1,6 +1,5 @@
 {
-  "manifest_version": "1",
-  "api_version": "1",
+  "required_api_version": "^2.0.0",
   "name": "Google Chrome Bookmarks",
   "description": "Search and launch Google Chrome bookmarks",
   "developer_name": "Dmitry Antonenko",
