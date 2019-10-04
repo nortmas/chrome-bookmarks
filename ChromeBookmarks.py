@@ -74,7 +74,7 @@ class ChromeBookmarks(Extension):
         self.matches_len = 0
 
         if query is None:
-            query = ''
+            query = 'qw'
 
         for bookmarks_path, browser in self.bookmarks_paths:
             matches = []
@@ -84,8 +84,8 @@ class ChromeBookmarks(Extension):
                 matches = self.find_rec(bookmark_bar, query, matches)
 
             for bookmark in matches:
-                bookmark_name = bookmark['name'].encode('utf-8')
-                bookmark_url = bookmark['url'].encode('utf-8')
+                bookmark_name = bookmark['name']
+                bookmark_url = bookmark['url']
                 item = ExtensionResultItem(
                     icon=browser_imgs.get(browser),
                     name='%s' % bookmark_name,
