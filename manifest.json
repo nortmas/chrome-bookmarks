@@ -1,8 +1,7 @@
 {
-  "manifest_version": "1",
-  "api_version": "1",
+  "required_api_version": "^2.0.0",
   "name": "Google Chrome Bookmarks",
-  "description": "Search and launch Google Chrome bookmarks",
+  "description": "Search and launch Google Chrome bookmarks.  Forked from the original repository to update for api v2.  Credit goes to Dmitry Antonenko: https://github.com/nortmas/Chrome-bookmarks",
   "developer_name": "Dmitry Antonenko",
   "icon": "images/chrome.png",
   "options": {
