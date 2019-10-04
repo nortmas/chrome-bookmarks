@@ -74,7 +74,7 @@ class ChromeBookmarks(Extension):
         self.matches_len = 0
 
         if query is None:
-            query = 'qw'
+            query = ''
 
         for bookmarks_path, browser in self.bookmarks_paths:
             matches = []
