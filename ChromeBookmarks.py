@@ -88,9 +88,9 @@ class ChromeBookmarks(Extension):
                 bookmark_url = bookmark['url'].encode('utf-8')
                 item = ExtensionResultItem(
                     icon=browser_imgs.get(browser),
-                    name='%s' % bookmark_name,
-                    description='%s' % bookmark_url,
-                    on_enter=OpenUrlAction(bookmark_url)
+                    name='%s' % bookmark_name.decode('utf-8'),
+                    description='%s' % bookmark_url.decode('utf-8'),
+                    on_enter=OpenUrlAction(bookmark_url.decode('utf-8'))
                 )
                 items.append(item)
 
