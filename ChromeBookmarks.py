@@ -81,6 +81,8 @@ class ChromeBookmarks(Extension):
             with open(bookmarks_path) as data_file:
                 data = json.load(data_file)
                 bookmark_bar = data['roots']['bookmark_bar']
+                other = data['roots']['other']
+                self.find_rec(other, query, matches)
                 matches = self.find_rec(bookmark_bar, query, matches)
 
             for bookmark in matches:
