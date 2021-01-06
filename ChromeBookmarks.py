@@ -55,7 +55,7 @@ class ChromeBookmarks(Extension):
     def find_rec(self, data, query, matches):
 
         if self.matches_len >= self.max_matches_len:
-            return
+            return matches
 
         if data['type'] == 'folder':
             for child in data['children']:
@@ -83,7 +83,7 @@ class ChromeBookmarks(Extension):
                 bookmark_bar = data['roots']['bookmark_bar']
                 other = data['roots']['other']
                 self.find_rec(other, query, matches)
-                matches = self.find_rec(bookmark_bar, query, matches)
+                matches = self.find_rec(bookmark_bar, query.lower(), matches)
 
             for bookmark in matches:
                 bookmark_name = bookmark['name'].encode('utf-8')
